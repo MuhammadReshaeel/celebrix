@@ -10,7 +10,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -35,7 +35,7 @@ export const useAuth = create<AuthState>()(
       loading: false,
       error: null,
 
-      login: async (email, password) => {
+      login: async (email, password, rememberMe = false) => {
         set({ loading: true, error: null });
         try {
           if (!validateUser(email, password)) {

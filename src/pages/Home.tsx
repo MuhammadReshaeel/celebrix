@@ -1,11 +1,12 @@
 import React from 'react';
-import { Star, Video, Gift, TrendingUp, Search } from 'lucide-react';
+
+import { Star, Video, Gift, TrendingUp, Search, ArrowRight } from 'lucide-react';
 import HowItWorks from '../components/HowItWorks';
-import { featuredCelebrities } from '../data/mockData';
-import { trendingCelebrities } from '../data/mockData';
-import CelebrityCard from '../components/CelebrityCard';
+import { featuredCelebrities, trendingCelebrities, categories } from '../data/mockData';
 import TrendingCreators from '../components/TrendingCreators';
 import FeaturedTalent from '../components/FaeturedTalent';
+import CategoryShowcase from '../components/CategoryShowcase';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -67,6 +68,9 @@ function Home() {
         </div>
       </section>
 
+       {/* Categories Showcase */}
+       <CategoryShowcase categories={categories} />
+
       {/* How It Works Section */}
       <HowItWorks />
 
@@ -76,22 +80,32 @@ function Home() {
       {/* Trending Celebrities */}
       <TrendingCreators celebrities={trendingCelebrities}/>
 
-      {/* <section className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-bold">Trending Stars</h2>
-            <div className="flex items-center text-emerald-400">
-              <TrendingUp className="w-5 h-5 mr-2" />
-              <span>Most Popular</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {trendingCelebrities.map((celebrity) => (
-              <CelebrityCard key={celebrity.id} celebrity={celebrity} />
-            ))}
+
+       {/* CTA Section */}
+       <section className="py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-emerald-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Create Unforgettable Moments?</h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of fans who've received personalized videos from their favorite celebrities
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/explore"
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition duration-200"
+            >
+              Browse Celebrities
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
+            <Link
+              to="/become-creator"
+              className="inline-flex items-center justify-center px-8 py-3 border border-emerald-600 text-base font-medium rounded-md text-emerald-400 hover:bg-emerald-600 hover:text-white transition duration-200"
+            >
+              Become a Creator
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
           </div>
         </div>
-      </section> */}
+      </section>
     </>
   );
 }

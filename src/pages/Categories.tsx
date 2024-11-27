@@ -1,6 +1,7 @@
 import React from 'react';
 import { categories } from '../data/mockData';
 import { Clapperboard, Music, Trophy, TrendingUp, Laugh, Tv } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const iconMap: { [key: string]: any } = {
   clapperboard: Clapperboard,
@@ -41,9 +42,9 @@ const Categories = () => {
                       <span className="text-sm text-gray-500">
                         {category.celebrityCount} celebrities
                       </span>
-                      <button className="text-emerald-400 hover:text-emerald-300 font-medium">
+                      <Link to={`${category.id}`} className="text-emerald-400 hover:text-emerald-300 font-medium" >
                         Browse All →
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

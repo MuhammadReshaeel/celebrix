@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import BecomeCreator from './pages/BecomeCreator';
 import PrivateRoute from './components/PrivateRoute';
 import About from './pages/AboutUs';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/:categoryId" element={<CategoryPage />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/become-creator" element={<BecomeCreator />} />
           <Route path="/celebrity/:id" element={

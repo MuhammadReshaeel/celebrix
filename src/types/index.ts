@@ -11,6 +11,11 @@ export interface Celebrity {
   tags?: string[];
   reviews?: number;
   bookings:number
+  stats:{
+    completed: string,
+      avgResponse: string,
+      joinedDate: string,
+  }
 }
 
 export interface Category {

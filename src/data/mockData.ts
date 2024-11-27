@@ -3,17 +3,22 @@ import { Celebrity, Category } from '../types';
 export const allCelebrities: Celebrity[] = [
   {
     id: 1,
-    name: "Emma Stone",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
-    category: "Actors",
-    price: 499,
+    name: 'Emma Thompson',
+    category: 'Actor',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
     rating: 4.9,
-    description: "Oscar-winning actress known for La La Land and Easy A",
-    responseTime: "24-48 hours",
-    languages: ["English"],
-    tags: ["Movies", "Hollywood", "Drama"],
-    reviews: 324,
+    reviews: 2453,
+    responseTime: '24h',
+    price: 150,
+    description: 'Award-winning actress known for dramatic and comedic roles. I love connecting with fans and creating special moments through personalized videos.',
+    languages: ['English', 'French'],
+    tags: ['Movies', 'TV Shows', 'Theater', 'Comedy', 'Drama'],
     bookings: 220,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 2,
@@ -28,6 +33,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Pop", "Rock", "Live Music"],
     reviews: 251,
     bookings: 320,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 3,
@@ -42,6 +52,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Lifestyle", "Fashion", "Beauty"],
     reviews: 428,
     bookings: 220,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 4,
@@ -56,6 +71,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Sports", "Olympics", "Motivation"],
     reviews: 178,
     bookings: 185,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 5,
@@ -70,6 +90,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Comedy", "Stand-up", "Entertainment"],
     reviews: 342,
     bookings: 190,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 6,
@@ -84,6 +109,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Action", "Movies", "Hollywood"],
     reviews: 192,
     bookings: 198,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 7,
@@ -98,6 +128,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Beauty", "Fashion", "Lifestyle"],
     reviews: 402,
     bookings: 410,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 8,
@@ -112,20 +147,30 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Reality TV", "Adventure", "Travel"],
     reviews: 276,
     bookings: 280,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 9,
     name: "Angela Davis",
     image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop",
     category: "Comedians",
-    price: 180,
-    rating: 4.6,
+    price: 400,
+    rating: 3.6,
     description: "Known for her humorous takes on modern life",
     responseTime: "20 hours",
     languages: ["English"],
     tags: ["Comedy", "Stand-up", "Improv"],
     reviews: 300,
     bookings: 295,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   },
   {
     id: 10,
@@ -140,6 +185,11 @@ export const allCelebrities: Celebrity[] = [
     tags: ["Sports", "Table Tennis", "Championship"],
     reviews: 412,
     bookings: 415,
+    stats: {
+      completed: '2.4K',
+      avgResponse: '16 hours',
+      joinedDate: 'Sep 2023',
+    }
   }
 ];
 

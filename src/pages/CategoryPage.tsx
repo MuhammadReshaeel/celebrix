@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Search, SlidersHorizontal } from 'lucide-react';
-import { allCelebrities } from '../data/mockData';
+import { allCelebrities, categories } from '../data/mockData';
 import CelebrityCard from '../components/CelebrityCard';
 import { useFilters } from '../hooks/useFilters';
 import FilterSidebar from '../commonComponents/FilterSidebar';
 
-const Explore = () => {
+const CategoryPage = () => {
+  const { categoryId } = useParams();
   const [showFilters, setShowFilters] = useState(false);
   
+  const category = categories.find(c => c.id === Number(categoryId));
+
+  const categoryCelebrities = allCelebrities.filter(celeb => celeb.category === category?.name);
+
   const {
     searchQuery,
     setSearchQuery,
@@ -16,20 +22,30 @@ const Explore = () => {
     handlePriceRangeChange,
     handleRatingChange,
     filterCelebrities
-  } = useFilters(allCelebrities);
+  } = useFilters(categoryCelebrities);
 
-  const filteredCelebrities = filterCelebrities(allCelebrities);
+  const filteredCelebrities = filterCelebrities(categoryCelebrities);
+
+  if (!category) {
+    return <div>Category not found</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Category Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold mb-4">{category.name}</h1>
+          <p className="text-gray-400">{category.description}</p>
+        </div>
+
         {/* Search and Filter Header */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="w-full md:w-2/3 mb-4 md:mb-0">
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search celebrities..."
+                placeholder={`Search ${category.name.toLowerCase()}...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-gray-800 border-none rounded-lg py-3 pl-12 pr-4 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-emerald-500"
@@ -77,4 +93,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default CategoryPage;
