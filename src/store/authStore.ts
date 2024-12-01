@@ -1,19 +1,36 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+
 interface User {
   id: string;
   email: string;
+  username?: string;
+  fullName?: string;
+}
+
+interface RegisterData {
+  fullName?: string;
+  username?: string;
 }
 
 interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-  register: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  login: (identifier: string, password: string, rememberMe?: boolean) => Promise<void>;
+  register: (email: string, password: string, data?: RegisterData) => Promise<void>;
+  logout: () => Promise<void>;
 }
+
+// interface AuthState {
+//   user: User | null;
+//   loading: boolean;
+//   error: string | null;
+//   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
+//   register: (email: string, password: string) => Promise<void>;
+//   logout: () => void;
+// }
 
 // Helper functions for local storage (mock DB)
 const loadUsers = () =>
@@ -50,7 +67,7 @@ export const useAuth = create<AuthState>()(
         }
       },
 
-      register: async (email, password) => {
+      register: async (email, password, data?: RegisterData) => {
         set({ loading: true, error: null });
         try {
           if (loadUsers()[email]) {
@@ -66,9 +83,10 @@ export const useAuth = create<AuthState>()(
         }
       },
 
-      logout: () => {
+      logout: async () => {
         set({ user: null });
       },
+    
     }),
     {
       name: 'auth-storage', // Key for Zustand persistence

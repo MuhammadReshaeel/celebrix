@@ -4,6 +4,7 @@ import { Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '../store/authStore';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import SocialLoginButtons from '../components/SocialLoginButtons';
 
 const loginSchema = Yup.object().shape({
   identifier: Yup.string().required('Email or username is required'),
@@ -38,6 +39,8 @@ const Login = () => {
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8">
+          <SocialLoginButtons mode="login" />
+          
           <Formik
             initialValues={{
               identifier: '',
@@ -48,7 +51,7 @@ const Login = () => {
             onSubmit={handleSubmit}
           >
             {({ errors, touched }) => (
-              <Form className="space-y-6">
+              <Form className="mt-6 space-y-6">
                 {error && (
                   <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg text-sm">
                     {error}
@@ -124,7 +127,7 @@ const Login = () => {
                   Sign in
                 </button>
 
-                <div className="text-center mt-6">
+                <div className="text-center">
                   <span className="text-gray-400">Don't have an account?</span>
                   {' '}
                   <Link
