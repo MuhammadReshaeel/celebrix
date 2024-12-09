@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
 import { ArrowRight, Star, Users, DollarSign, Clock, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BecomeCreator = () => {
-  const [step, setStep] = useState(1);
-
   const benefits = [
     {
       icon: DollarSign,
@@ -40,13 +38,14 @@ const BecomeCreator = () => {
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
               Join thousands of creators earning by connecting with fans through personalized videos
             </p>
-            <button 
-              onClick={() => setStep(2)}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold flex items-center mx-auto transition duration-200"
-            >
-              Start Creating
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </button>
+
+            <Link
+            to="/talent-onboarding"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center transition duration-200"
+          >
+            Start Creating
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </Link>
           </div>
         </div>
       </section>
@@ -166,13 +165,13 @@ const BecomeCreator = () => {
           <p className="text-gray-400 mb-8 text-lg">
             Join our growing community of creators and start earning by doing what you love
           </p>
-          <button 
-            onClick={() => setStep(2)}
+          <Link
+            to="/talent-onboarding"
             className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center transition duration-200"
           >
             Apply Now
             <ArrowRight className="ml-2 w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </section>
     </div>

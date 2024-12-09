@@ -12,6 +12,7 @@ import BecomeCreator from './pages/BecomeCreator';
 import PrivateRoute from './components/PrivateRoute';
 import About from './pages/AboutUs';
 import CategoryPage from './pages/CategoryPage';
+import TalentOnboarding from './pages/TalentOnboarding';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/categories/:categoryId" element={<CategoryPage />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/become-creator" element={<BecomeCreator />} />
+          <Route path="/talent-onboarding" element={<TalentOnboarding />} />
           <Route path="/celebrity/:id" element={
             <PrivateRoute>
               <CelebrityProfile />

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Heart, LogOut } from 'lucide-react';
+import { Menu, X, User, Heart, LogOut, Star } from 'lucide-react';
 import { useAuth } from '../store/authStore';
+import NavLink from './navbar/NavLink';
+import MobileNavLink from './navbar/MobileNavLink';
+import IconButton from './navbar/IconButton';
+import NotificationButton from './navbar/NotificationButton';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -13,66 +18,91 @@ const Navbar = () => {
     navigate('/');
   };
 
+  // Mock notifications - in a real app, this would come from your backend
+  const notifications = [
+    {
+      id: 1,
+      title: "New Message",
+      message: "You received a new video message!",
+      time: "2 minutes ago",
+      read: false
+    },
+    {
+      id: 2,
+      title: "Booking Confirmed",
+      message: "Your video request has been accepted",
+      time: "1 hour ago",
+      read: true
+    }
+  ];
+
   return (
     <nav className="bg-gray-900/95 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="flex items-center space-x-2 group">
+              <Star className="w-8 h-8 text-emerald-400 transform rotate-12 group-hover:rotate-45 transition-transform duration-300" />
               <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">
-                Zuromi
+                StarReach
               </span>
             </Link>
           </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              <Link to="/explore" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                Browse
-              </Link>
-              <Link to="/categories" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                Categories
-              </Link>
-              <Link to="/business" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                Business
-              </Link>
-              <Link to="/become-creator" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                Become a Creator
-              </Link>
-              <Link to="/about" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-                About
-              </Link>
-              <div className="flex items-center space-x-2">
-                {user ? (
-                  <>
-                    <Link to="/favorites" className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-gray-800">
-                      <Heart className="w-6 h-6" />
-                    </Link>
-                    <Link to="/profile" className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-gray-800">
-                      <User className="w-6 h-6" />
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="p-2 text-gray-300 hover:text-white rounded-full hover:bg-gray-800"
-                    >
-                      <LogOut className="w-6 h-6" />
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md transition duration-200 flex items-center"
-                  >
-                    <User className="w-5 h-5 mr-2" />
-                    Sign In
-                  </Link>
-                )}
-              </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:justify-center flex-1 px-8">
+            <div className="flex space-x-2">
+              <NavLink to="/explore">Browse</NavLink>
+              <NavLink to="/categories">Categories</NavLink>
+              <NavLink to="/business">Business</NavLink>
+              <NavLink to="/become-creator">Become a Creator</NavLink>
+              <NavLink to="/about">About</NavLink>
             </div>
           </div>
-          <div className="md:hidden">
+
+          {/* Desktop Right Section */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <>
+                <NotificationButton
+                  showNotifications={showNotifications}
+                  setShowNotifications={setShowNotifications}
+                  notifications={notifications}
+                />
+                <IconButton to="/favorites" icon={Heart} label="Favorites" />
+                <IconButton to="/profile" icon={User} label="Profile" />
+                <button
+                  onClick={handleLogout}
+                  className="p-2 text-gray-300 hover:text-emerald-400 rounded-full hover:bg-gray-800/50 transition-all duration-200"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-lg transition duration-200 flex items-center text-base font-medium"
+              >
+                <User className="w-5 h-5 mr-2" />
+                Sign In
+              </Link>
+            )}
+          </div>
+
+          {/* Mobile Right Section */}
+          <div className="flex md:hidden items-center space-x-4">
+            {user && (
+              <NotificationButton
+                showNotifications={showNotifications}
+                setShowNotifications={setShowNotifications}
+                notifications={notifications}
+                isMobile={true}
+              />
+            )}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-emerald-400 hover:bg-gray-800/50 focus:outline-none transition-colors"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -83,41 +113,25 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/explore" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Browse
-            </Link>
-            <Link to="/categories" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Categories
-            </Link>
-            <Link to="/business" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Business
-            </Link>
-            <Link to="/become-creator" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              Become a Creator
-            </Link>
-            <Link to="/about" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-              About
-            </Link>
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            <MobileNavLink to="/explore">Browse</MobileNavLink>
+            <MobileNavLink to="/categories">Categories</MobileNavLink>
+            <MobileNavLink to="/business">Business</MobileNavLink>
+            <MobileNavLink to="/become-creator">Become a Creator</MobileNavLink>
+            <MobileNavLink to="/about">About</MobileNavLink>
             {user ? (
               <>
-                <Link to="/favorites" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                  Favorites
-                </Link>
-                <Link to="/profile" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                  Profile
-                </Link>
+                <MobileNavLink to="/favorites">Favorites</MobileNavLink>
+                <MobileNavLink to="/profile">Profile</MobileNavLink>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-300 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium"
+                  className="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:text-emerald-400 hover:bg-gray-800/50 transition-all duration-200"
                 >
                   Logout
                 </button>
               </>
             ) : (
-              <Link to="/login" className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                Sign In
-              </Link>
+              <MobileNavLink to="/login">Sign In</MobileNavLink>
             )}
           </div>
         </div>
