@@ -91,6 +91,10 @@ const pricingSchema = Yup.object().shape({
       otherwise: (schema) => schema.notRequired(),
     }),
   responseTime: Yup.string().required('Response time is required'),
+  // availability: Yup.array().when('services', {
+  //   is: (services: string[]) => services.includes('meetingPrice'),
+  //   then: Yup.array().min(1, 'Add at least one availability slot')
+  // })
 });
 
 
@@ -191,7 +195,8 @@ const TalentOnboarding = () => {
               personalVideoPrice: '',
               businessVideoPrice: '',
               meetingPrice: '',
-              responseTime: ''
+              responseTime: '',
+              availability: [] 
             }}
             validationSchema={getValidationSchema(currentStep)}
             validateOnMount={true}

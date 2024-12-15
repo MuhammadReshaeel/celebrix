@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute';
 import About from './pages/AboutUs';
 import CategoryPage from './pages/CategoryPage';
 import TalentOnboarding from './pages/TalentOnboarding';
+import EditProfile from './pages/EditProfile';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
               <CelebrityProfile />
             </PrivateRoute>
           } />
+            <Route path="/profile/edit" element={<EditProfile />} />
+            {/* <Route path="profile/:id/pricing" element={<EditPricing />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

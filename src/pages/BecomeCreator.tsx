@@ -40,12 +40,12 @@ const BecomeCreator = () => {
             </p>
 
             <Link
-            to="/talent-onboarding"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center transition duration-200"
-          >
-            Start Creating
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Link>
+              to="/talent-onboarding"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold inline-flex items-center transition duration-200"
+            >
+              Start Creating
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
           </div>
         </div>
       </section>

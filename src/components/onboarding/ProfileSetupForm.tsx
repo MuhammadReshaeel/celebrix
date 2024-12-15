@@ -26,12 +26,7 @@ const ProfileSetupForm: React.FC<ProfileSetupFormProps> = ({ formik, onBack, onN
     'Other',
   ];
 
-  console.log({
-  values: formik.values,
-  errors: formik.errors,
-  isValid: formik.isValid,
-  touched: formik.touched,
-});
+
 
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.currentTarget.value) {

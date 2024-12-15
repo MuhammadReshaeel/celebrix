@@ -7,6 +7,7 @@ interface User {
   email: string;
   username?: string;
   fullName?: string;
+  profileImage?:string | Blob | File | undefined | any;
 }
 
 interface RegisterData {
@@ -23,16 +24,6 @@ interface AuthState {
   logout: () => Promise<void>;
 }
 
-// interface AuthState {
-//   user: User | null;
-//   loading: boolean;
-//   error: string | null;
-//   login: (email: string, password: string, rememberMe?: boolean) => Promise<void>;
-//   register: (email: string, password: string) => Promise<void>;
-//   logout: () => void;
-// }
-
-// Helper functions for local storage (mock DB)
 const loadUsers = () =>
   JSON.parse(localStorage.getItem('mockAuthUsers') || '{}') as Record<string, string>;
 

@@ -1,29 +1,49 @@
-import React from 'react';
-import { DollarSign, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { DollarSign, Clock, Info } from 'lucide-react'; // Add the Info icon
 import { FormikProps } from 'formik';
+import DateTimeSelector from './DateTimeSelector';
+
+interface TimeSlot {
+  start: string;
+  end: string;
+}
+
+interface DateAvailability {
+  date: string;
+  timeSlots: TimeSlot[];
+}
+
+interface PricingFormValues {
+  personalVideoPrice: string;
+  businessVideoPrice: string;
+  meetingPrice: string;
+  responseTime: string;
+  services: string[];
+  availability?: DateAvailability[];
+}
 
 interface PricingFormProps {
-  formik: FormikProps<{
-    personalVideoPrice: string;
-    businessVideoPrice: string;
-    meetingPrice: string;
-    responseTime: string;
-    services: string[];
-  }>;
+  formik: FormikProps<PricingFormValues>;
   onBack: () => void;
   onSubmit: () => void;
 }
 
-
-
 const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) => {
 
-  const services = [
-    { label: 'Personal Videos', value: 'personalVideoPrice' },
-    { label: 'Business Videos', value: 'businessVideoPrice' },
-    { label: 'One-on-One Meetings', value: 'meetingPrice' },
-  ];
+  console.log({
+    values: formik.values,
+    errors: formik.errors,
+    isValid: formik.isValid,
+    touched: formik.touched,
+  });
 
+  const [showAvailability, setShowAvailability] = useState(false);
+
+  const services = [
+    { label: 'Personal Videos', value: 'personalVideoPrice', info: 'Create personalized video messages for your fans.' },
+    { label: 'Business Videos', value: 'businessVideoPrice', info: 'Deliver professional video content for businesses.' },
+    { label: 'One-on-One Meetings', value: 'meetingPrice', info: 'Schedule private meetings to interact directly.' },
+  ];
   const toggleService = (service: string) => {
     const currentServices = formik.values.services || [];
     if (currentServices.includes(service)) {
@@ -31,8 +51,15 @@ const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) =
         'services',
         currentServices.filter((s) => s !== service)
       );
+      if (service === 'meetingPrice') {
+        setShowAvailability(false);
+        formik.setFieldValue('availability', []);
+      }
     } else {
       formik.setFieldValue('services', [...currentServices, service]);
+      if (service === 'meetingPrice') {
+        setShowAvailability(true);
+      }
     }
   };
 
@@ -47,7 +74,9 @@ const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) =
 
       {/* Services Selection */}
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Select Services You Offer <span className="text-red-500">*</span></label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Select Services You Offer <span className="text-red-500">*</span>
+        </label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {services.map((service) => (
             <button
@@ -76,7 +105,9 @@ const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) =
 
         return (
           <div key={service} className="mt-4">
-            <label className="block text-sm font-medium text-gray-300 mb-2">{serviceData.label} Price <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              {serviceData.label} Price <span className="text-red-500">*</span>
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <DollarSign className="h-5 w-5 text-gray-400" />
@@ -103,7 +134,9 @@ const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) =
 
       {/* Response Time */}
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">Response Time <span className="text-red-500">*</span></label>
+        <label className="block text-sm font-medium text-gray-300 mb-2">
+          Response Time <span className="text-red-500">*</span>
+        </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Clock className="h-5 w-5 text-gray-400" />
@@ -127,6 +160,15 @@ const PricingForm: React.FC<PricingFormProps> = ({ formik, onBack, onSubmit }) =
           <div className="mt-1 text-sm text-red-500">{formik.errors.responseTime}</div>
         )}
       </div>
+
+      {/* Meeting Availability */}
+      {showAvailability && (
+        <DateTimeSelector
+        setFieldValue={(field: string, value: any) => {
+          formik.setFieldValue(field, value);
+        }}
+        />
+      )}
 
       {/* Navigation Buttons */}
       <div className="flex justify-between">

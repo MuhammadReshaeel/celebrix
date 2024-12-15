@@ -6,11 +6,13 @@ import ReelsSection from '../components/ReelsSection';
 import ReviewSection from '../components/ReviewSection';
 import StatsCard from '../components/StatsCard';
 import { useParams } from 'react-router-dom';
+import ProfileActions from '../components/celebrityProfile/ProfileActionButtons';
 
 const CelebrityProfile = () => {
   const { id } = useParams();
   const [bookingType, setBookingType] = useState<'personal' | 'business' | 'meeting'>('personal');
   const celebrity = allCelebrities.find(c => c.id === Number(id));
+  const isOwnProfile = true; // In real app, check if logged-in user is the celebrity
 
   return (
     <div className="min-h-screen bg-gray-900 pt-20 pb-12">
@@ -34,7 +36,10 @@ const CelebrityProfile = () => {
 
           {/* Profile Info */}
           <div className="lg:col-span-9 text-center lg:text-left">
-            <h1 className="text-3xl lg:text-4xl font-bold text-white mb-3">{celebrity?.name}</h1>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold text-white">{celebrity?.name}</h1>
+              {isOwnProfile && <ProfileActions />}
+            </div>
             <div className="flex items-center justify-center lg:justify-start gap-3 text-emerald-400 mb-4">
               <div className="flex items-center text-yellow-400">
                 <Star className="h-5 w-5 fill-current" />
