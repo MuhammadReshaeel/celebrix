@@ -36,9 +36,13 @@ const CelebrityProfile = () => {
 
           {/* Profile Info */}
           <div className="lg:col-span-9 text-center lg:text-left">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-              <h1 className="text-3xl lg:text-4xl font-bold text-white">{celebrity?.name}</h1>
-              {isOwnProfile && <ProfileActions />}
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">{celebrity?.name}</h1>
+              {isOwnProfile && (
+                <div className="flex justify-center lg:justify-start">
+                  <ProfileActions />
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-center lg:justify-start gap-3 text-emerald-400 mb-4">
               <div className="flex items-center text-yellow-400">
@@ -54,10 +58,6 @@ const CelebrityProfile = () => {
               <div className="flex items-center justify-center lg:justify-start space-x-2 text-gray-300 bg-gray-800/50 rounded-lg p-2 text-sm">
                 <Clock className="w-4 h-4 text-emerald-400" />
                 <span>{celebrity?.responseTime}</span>
-              </div>
-              <div className="flex items-center justify-center lg:justify-start space-x-2 text-gray-300 bg-gray-800/50 rounded-lg p-2 text-sm">
-                <Globe className="w-4 h-4 text-emerald-400" />
-                <span>{celebrity?.languages?.join(', ')}</span>
               </div>
               <div className="flex items-center justify-center lg:justify-start space-x-2 text-gray-300 bg-gray-800/50 rounded-lg p-2 text-sm">
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
@@ -87,41 +87,38 @@ const CelebrityProfile = () => {
               <div className="grid grid-cols-3 gap-3 mb-6">
                 <button
                   onClick={() => setBookingType('personal')}
-                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                    bookingType === 'personal'
+                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${bookingType === 'personal'
                       ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'
                       : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
-                  }`}
+                    }`}
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>Personal</span>
                 </button>
                 <button
                   onClick={() => setBookingType('business')}
-                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                    bookingType === 'business'
+                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${bookingType === 'business'
                       ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'
                       : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
-                  }`}
+                    }`}
                 >
                   <Tag className="w-4 h-4" />
                   <span>Business</span>
                 </button>
                 <button
                   onClick={() => setBookingType('meeting')}
-                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                    bookingType === 'meeting'
+                  className={`py-2.5 px-4 rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 ${bookingType === 'meeting'
                       ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'
                       : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
-                  }`}
+                    }`}
                 >
                   <Video className="w-4 h-4" />
                   <span>Meeting</span>
                 </button>
               </div>
 
-              <BookingForm 
-                type={bookingType} 
+              <BookingForm
+                type={bookingType}
                 celebrity={{
                   name: celebrity?.name ?? '', // Fallback to an empty string if undefined
                   prices: {

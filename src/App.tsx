@@ -14,6 +14,8 @@ import About from './pages/AboutUs';
 import CategoryPage from './pages/CategoryPage';
 import TalentOnboarding from './pages/TalentOnboarding';
 import EditProfile from './pages/EditProfile';
+import EditPricing from './pages/EditPricing';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -34,9 +36,14 @@ function App() {
             </PrivateRoute>
           } />
             <Route path="/profile/edit" element={<EditProfile />} />
-            {/* <Route path="profile/:id/pricing" element={<EditPricing />} /> */}
+            <Route path="/profile/pricing" element={<EditPricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/settings" element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          } />
         </Routes>
         <Footer />
       </div>

@@ -14,7 +14,7 @@ const ProfileActions = () => {
       </Link>
       <Link
         to={`/profile/pricing`}
-        className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors w-full sm:w-auto"
+        className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors w-full sm:w-auto"
       >
         <DollarSign className="w-4 h-4" />
         <span>Edit Pricing</span>
