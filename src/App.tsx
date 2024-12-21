@@ -16,6 +16,8 @@ import TalentOnboarding from './pages/TalentOnboarding';
 import EditProfile from './pages/EditProfile';
 import EditPricing from './pages/EditPricing';
 import Settings from './pages/Settings';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -35,8 +37,8 @@ function App() {
               <CelebrityProfile />
             </PrivateRoute>
           } />
-            <Route path="/profile/edit" element={<EditProfile />} />
-            <Route path="/profile/pricing" element={<EditPricing />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/profile/pricing" element={<EditPricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/settings" element={
@@ -44,6 +46,9 @@ function App() {
               <Settings />
             </PrivateRoute>
           } />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+
         </Routes>
         <Footer />
       </div>

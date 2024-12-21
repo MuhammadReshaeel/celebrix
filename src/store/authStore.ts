@@ -1,40 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-
-interface User {
-  id: string;
-  email: string;
-  username?: string;
-  fullName?: string;
-  profileImage?:string | Blob | File | undefined | any;
-}
-
-interface RegisterData {
-  fullName?: string;
-  username?: string;
-}
+import { User, LoginCredentials, RegisterData } from '../types/auth';
+import AuthService from '../services/api/auth.service';
 
 interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
-  login: (identifier: string, password: string, rememberMe?: boolean) => Promise<void>;
-  register: (email: string, password: string, data?: RegisterData) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
+  clearError: () => void;
 }
-
-const loadUsers = () =>
-  JSON.parse(localStorage.getItem('mockAuthUsers') || '{}') as Record<string, string>;
-
-const saveUser = (email: string, password: string) => {
-  const users = loadUsers();
-  users[email] = password;
-  localStorage.setItem('mockAuthUsers', JSON.stringify(users));
-};
-
-const validateUser = (email: string, password: string) =>
-  loadUsers()[email] === password;
 
 export const useAuth = create<AuthState>()(
   persist(
@@ -43,13 +20,11 @@ export const useAuth = create<AuthState>()(
       loading: false,
       error: null,
 
-      login: async (email, password, rememberMe = false) => {
+      login: async (credentials) => {
         set({ loading: true, error: null });
         try {
-          if (!validateUser(email, password)) {
-            throw new Error('Invalid credentials');
-          }
-          set({ user: { id: Date.now().toString(), email } });
+          const response = await AuthService.login(credentials);
+          set({ user: response.user });
         } catch (error) {
           set({ error: (error as Error).message });
           throw error;
@@ -58,14 +33,11 @@ export const useAuth = create<AuthState>()(
         }
       },
 
-      register: async (email, password, data?: RegisterData) => {
+      register: async (data) => {
         set({ loading: true, error: null });
         try {
-          if (loadUsers()[email]) {
-            throw new Error('User already exists');
-          }
-          saveUser(email, password);
-          set({ user: { id: Date.now().toString(), email } });
+          const response = await AuthService.register(data);
+          set({ user: response.user });
         } catch (error) {
           set({ error: (error as Error).message });
           throw error;
@@ -75,12 +47,23 @@ export const useAuth = create<AuthState>()(
       },
 
       logout: async () => {
-        set({ user: null });
+        set({ loading: true, error: null });
+        try {
+          await AuthService.logout();
+          set({ user: null });
+        } catch (error) {
+          set({ error: (error as Error).message });
+          throw error;
+        } finally {
+          set({ loading: false });
+        }
       },
-    
+
+      clearError: () => set({ error: null }),
     }),
     {
-      name: 'auth-storage', // Key for Zustand persistence
+      name: 'auth-storage',
+      partialize: (state) => ({ user: state.user }),
     }
   )
 );
